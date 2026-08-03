@@ -1,6 +1,7 @@
 package com.workoutlogger.workout_logger.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "exercises")
@@ -11,6 +12,7 @@ public class Exercise {
     private Long id;
 
     @Column(nullable = false)
+    @NotBlank(message = "Exercise name is required.")
     private String name;
 
     private String category;

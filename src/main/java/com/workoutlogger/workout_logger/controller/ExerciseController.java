@@ -2,6 +2,7 @@ package com.workoutlogger.workout_logger.controller;
 
 import com.workoutlogger.workout_logger.model.Exercise;
 import com.workoutlogger.workout_logger.service.ExerciseService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,12 +30,12 @@ public class ExerciseController {
     }
 
     @PostMapping
-    public Exercise createExercise(@RequestBody Exercise exercise) {
+    public Exercise createExercise(@Valid @RequestBody Exercise exercise) {
         return exerciseService.createExercise(exercise);
     }
 
     @PutMapping("/{id}")
-    public Exercise updateExercise(@PathVariable Long id, @RequestBody Exercise exercise) {
+    public Exercise updateExercise(@PathVariable Long id, @Valid @RequestBody Exercise exercise) {
         return exerciseService.updateExercise(id, exercise);
     }
 

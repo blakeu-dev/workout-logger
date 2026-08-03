@@ -1,5 +1,6 @@
 package com.workoutlogger.workout_logger.service;
 
+import com.workoutlogger.workout_logger.exception.ResourceNotFoundException;
 import com.workoutlogger.workout_logger.model.Exercise;
 import com.workoutlogger.workout_logger.model.Workout;
 import com.workoutlogger.workout_logger.model.WorkoutExercise;
@@ -31,10 +32,10 @@ public class WorkoutExerciseService {
 
     public WorkoutExercise addExerciseToWorkout(Long workoutId, Long exerciseId, Integer orderIndex) {
         Workout workout = workoutRepository.findById(workoutId)
-                .orElseThrow(() -> new RuntimeException("Workout not found with id: " + workoutId));
+                .orElseThrow(() -> new ResourceNotFoundException("Workout not found with id: " + workoutId));
 
         Exercise exercise = exerciseRepository.findById(exerciseId)
-                .orElseThrow(() -> new RuntimeException("Exercise not found with id: " + exerciseId));
+                .orElseThrow(() -> new ResourceNotFoundException("Exercise not found with id: " + exerciseId));
 
         WorkoutExercise workoutExercise = new WorkoutExercise(workout, exercise, orderIndex);
         return workoutExerciseRepository.save(workoutExercise);
@@ -44,7 +45,7 @@ public class WorkoutExerciseService {
 
     public void removeExerciseFromWorkout(Long id) {
         WorkoutExercise existing = workoutExerciseRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("WorkooutExercise not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("WorkoutExercise not found with id: " + id));
         workoutExerciseRepository.delete(existing);
 
     }

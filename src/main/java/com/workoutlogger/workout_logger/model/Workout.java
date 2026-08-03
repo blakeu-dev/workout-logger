@@ -1,6 +1,7 @@
 package com.workoutlogger.workout_logger.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class Workout {
     private Long id;
 
     @Column(nullable = false)
+    @NotNull(message = "Workout date is required")
     private LocalDate date;
 
     private String name;

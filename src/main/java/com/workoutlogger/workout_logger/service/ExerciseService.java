@@ -1,5 +1,6 @@
 package com.workoutlogger.workout_logger.service;
 
+import com.workoutlogger.workout_logger.exception.ResourceNotFoundException;
 import com.workoutlogger.workout_logger.model.Exercise;
 import com.workoutlogger.workout_logger.repository.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class ExerciseService {
 
     public Exercise getExerciseById(Long id) {
         return exerciseRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Exercise not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Exercise not found with id: " + id));
     }
 
     public Exercise createExercise(Exercise exercise) {
