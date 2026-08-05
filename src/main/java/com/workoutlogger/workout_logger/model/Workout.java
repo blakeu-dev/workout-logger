@@ -1,6 +1,8 @@
 package com.workoutlogger.workout_logger.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
@@ -19,12 +21,14 @@ public class Workout {
     @NotNull(message = "Workout date is required")
     private LocalDate date;
 
+    @NotBlank(message = "Workout name is required.")
     private String name;
 
     @Column(columnDefinition = "TEXT")
     private String notes;
 
     @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<WorkoutExercise> workoutExercises = new ArrayList<>();
 
     //No args constructor for JPA

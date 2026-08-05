@@ -2,6 +2,7 @@ package com.workoutlogger.workout_logger.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "exercises")
@@ -15,8 +16,10 @@ public class Exercise {
     @NotBlank(message = "Exercise name is required.")
     private String name;
 
+    @NotBlank(message = "Category is required.")
     private String category;
 
+    @NotBlank(message = "Equipment is required.")
     private String equipment;
 
     //No args constructor for JPA
