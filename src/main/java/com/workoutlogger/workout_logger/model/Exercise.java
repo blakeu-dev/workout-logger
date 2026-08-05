@@ -10,7 +10,7 @@ public class Exercise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; //Exercise id
 
     @Column(nullable = false)
     @NotBlank(message = "Exercise name is required.")
