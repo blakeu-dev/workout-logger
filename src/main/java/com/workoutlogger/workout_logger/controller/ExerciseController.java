@@ -1,5 +1,6 @@
 package com.workoutlogger.workout_logger.controller;
 
+import com.workoutlogger.workout_logger.dto.ExerciseProgressDto;
 import com.workoutlogger.workout_logger.model.Exercise;
 import com.workoutlogger.workout_logger.service.ExerciseService;
 import jakarta.validation.Valid;
@@ -42,5 +43,10 @@ public class ExerciseController {
     @DeleteMapping("/{id}")
     public void deleteExercise(@PathVariable Long id) {
         exerciseService.deleteExercise(id);
+    }
+
+    @GetMapping("/{id}/progress")
+    public List<ExerciseProgressDto> getProgress (@PathVariable Long id) {
+        return exerciseService.getProgressForExercise(id);
     }
 }
