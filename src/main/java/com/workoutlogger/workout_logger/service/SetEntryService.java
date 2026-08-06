@@ -10,6 +10,7 @@ import com.workoutlogger.workout_logger.repository.WorkoutExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.RoundingMode;
 import java.util.List;
 
 @Service
@@ -31,6 +32,14 @@ public class SetEntryService {
     public SetEntry addSetToWorkoutExercise(Long workoutExerciseId, Integer setNumber, Integer reps, BigDecimal weight) {
         WorkoutExercise workoutExercise = workoutExerciseRepository.findById(workoutExerciseId)
                 .orElseThrow(() -> new ResourceNotFoundException("WorkoutExercise not found with id: " + workoutExerciseId));
+
+        if (setEntryRepository.existsByWorkoutExerciseIdAndSetNumber(workoutExerciseId, setNumber)) {
+            throw new IllegalArgumentException("setNumber " + setNumber + " already exists for workout exercise " + workoutExerciseId + ".");
+        }
+
+        if (weight != null) {
+            weight = weight.setScale(2, RoundingMode.HALF_UP);
+        }
 
         SetEntry setEntry = new SetEntry(workoutExercise, setNumber, reps, weight);
         return setEntryRepository.save(setEntry);

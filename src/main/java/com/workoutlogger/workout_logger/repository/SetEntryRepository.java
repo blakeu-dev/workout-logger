@@ -10,4 +10,6 @@ import java.util.List;
 public interface SetEntryRepository extends JpaRepository<SetEntry, Long> {
 
     List<SetEntry> findByWorkoutExerciseIdOrderBySetNumber(Long workoutExerciseId);
+
+    boolean existsByWorkoutExerciseIdAndSetNumber(Long workoutExerciseId, Integer setNumber);
 }

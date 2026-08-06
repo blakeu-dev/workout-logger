@@ -1,5 +1,6 @@
 package com.workoutlogger.workout_logger.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -14,6 +15,7 @@ public class SetEntry {
 
     @ManyToOne
     @JoinColumn(name = "workout_exercise_id", nullable = false)
+    @JsonIgnore
     private WorkoutExercise workoutExercise;
 
     @Column(name = "set_number", nullable = false)

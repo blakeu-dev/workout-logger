@@ -37,6 +37,10 @@ public class WorkoutExerciseService {
         Exercise exercise = exerciseRepository.findById(exerciseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Exercise not found with id: " + exerciseId));
 
+        if (workoutExerciseRepository.existsByWorkoutIdAndOrderIndex(workoutId, orderIndex)) {
+            throw new IllegalArgumentException("orderIndex " + orderIndex + " is already used for workout " + workoutId + ".");
+        }
+
         WorkoutExercise workoutExercise = new WorkoutExercise(workout, exercise, orderIndex);
         return workoutExerciseRepository.save(workoutExercise);
 
