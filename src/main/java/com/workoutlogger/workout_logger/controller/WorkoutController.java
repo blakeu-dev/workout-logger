@@ -4,6 +4,7 @@ import com.workoutlogger.workout_logger.model.Workout;
 import com.workoutlogger.workout_logger.service.WorkoutService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -43,5 +44,10 @@ public class WorkoutController {
     @DeleteMapping("/{id}")
     public void deleteWorkout(@PathVariable Long id) {
         workoutService.deleteWorkout(id);
+    }
+
+    @GetMapping("/search")
+    public List<Workout> getWorkoutsByDateRange(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate) {
+        return workoutService.getWorkoutsByDateRange(startDate, endDate);
     }
 }

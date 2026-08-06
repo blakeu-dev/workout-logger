@@ -5,7 +5,10 @@ import com.workoutlogger.workout_logger.model.Workout;
 import com.workoutlogger.workout_logger.repository.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -49,6 +52,10 @@ public class WorkoutService {
     public void deleteWorkout(Long id) {
         Workout existing = getWorkoutById(id);
         workoutRepository.delete(existing);
+    }
+
+    public List<Workout> getWorkoutsByDateRange(LocalDate startDate, LocalDate endDate) {
+        return workoutRepository.findByDateBetweenOrderByDate(startDate, endDate);
     }
 
 
