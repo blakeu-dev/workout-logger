@@ -90,4 +90,11 @@ public class ExerciseService {
         return progress;
     }
 
+    public List<Exercise> searchByName(String name) {
+        return exerciseRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    public List<Exercise> searchByCategory(String category) {
+        return exerciseRepository.findByCategoryContainingIgnoreCase(category);
+    }
 }
