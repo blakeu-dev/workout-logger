@@ -5,6 +5,8 @@ import com.workoutlogger.workout_logger.model.Exercise;
 import com.workoutlogger.workout_logger.service.ExerciseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +23,8 @@ public class ExerciseController {
     }
 
     @GetMapping
-    public List<Exercise> getAllExercises() {
-        return exerciseService.getAllExercises();
+    public Page<Exercise> getAllExercises(Pageable pageable) {
+        return exerciseService.getAllExercises(pageable);
     }
 
     @GetMapping("/{id}")
@@ -48,5 +50,15 @@ public class ExerciseController {
     @GetMapping("/{id}/progress")
     public List<ExerciseProgressDto> getProgress (@PathVariable Long id) {
         return exerciseService.getProgressForExercise(id);
+    }
+
+    @GetMapping("/search")
+    public List<Exercise> searchByName(@RequestParam String name) {
+        return exerciseService.searchByName(name);
+    }
+
+    @GetMapping("/filter")
+    public List<Exercise> searchByCategory(@RequestParam String category) {
+        return exerciseService.searchByCategory(category);
     }
 }

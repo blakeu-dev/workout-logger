@@ -4,7 +4,8 @@ import com.workoutlogger.workout_logger.model.Workout;
 import com.workoutlogger.workout_logger.service.WorkoutService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -22,8 +23,8 @@ public class WorkoutController {
     }
 
     @GetMapping
-    public List<Workout> getAllWorkouts() {
-        return workoutService.getAllWorkouts();
+    public Page<Workout> getAllWorkouts(Pageable pageable) {
+        return workoutService.getAllWorkouts(pageable);
     }
 
     @GetMapping("/{id}")

@@ -8,6 +8,8 @@ import com.workoutlogger.workout_logger.model.WorkoutExercise;
 import com.workoutlogger.workout_logger.repository.ExerciseRepository;
 import com.workoutlogger.workout_logger.repository.WorkoutExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -26,8 +28,8 @@ public class ExerciseService {
         this.workoutExerciseRepository = workoutExerciseRepository;
     }
 
-    public List<Exercise> getAllExercises() {
-        return exerciseRepository.findAll();
+    public Page<Exercise> getAllExercises(Pageable pageable) {
+        return exerciseRepository.findAll(pageable);
     }
 
     public Exercise getExerciseById(Long id) {
