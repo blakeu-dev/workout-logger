@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,7 +32,7 @@ public class ExerciseServiceTest {
     private ExerciseService exerciseService;
 
     @Test
-    void getProgressForExercise_returnsCorrectMaxWeightAndVolume() {
+    void getProgressForExerciseReturnsCorrectMaxWeightAndVolume() {
         Workout workout1 = new Workout(LocalDate.of(2026, 8, 4), "Push Day", null);
         ReflectionTestUtils.setField(workout1, "id", 5L);
 
@@ -58,5 +59,43 @@ public class ExerciseServiceTest {
         assertEquals(10, dto.getRepsAtMaxWeight()); //confirms reps recorded were pulled from correct (heaviest) set
         assertEquals(0, new BigDecimal("3530.00").compareTo(dto.getTotalVolume())); //confirms total volume. (185 x 8) + (205 x 10) = 3530
 
+    }
+
+    @Test
+    void getProgressForExerciseSkipsSessionsWithNoSets() {
+        Workout workout1 = new Workout(LocalDate.of(2026, 8, 4), "Push Day", null);
+        ReflectionTestUtils.setField(workout1, "id", 5L);
+
+        Exercise exercise1 = new Exercise("Bench Press", "Chest", "Barbell");
+        ReflectionTestUtils.setField(exercise1, "id", 5L);
+
+        WorkoutExercise workoutExercise1 = new WorkoutExercise(workout1, exercise1, 1);
+        ReflectionTestUtils.setField(workoutExercise1, "id", 5L);
+
+        when(workoutExerciseRepository.findByExerciseIdOrderByWorkoutDate(5L)).thenReturn(List.of(workoutExercise1));
+
+        List<ExerciseProgressDto> result = exerciseService.getProgressForExercise(5L);
+
+        assertEquals(0, result.size());
+    }
+
+    @Test
+    void createExerciseSavesValidExercise() {
+        Exercise exercise1 = new Exercise("Squat", "Legs", "Barbell");
+
+        when(exerciseRepository.save(exercise1)).thenReturn(exercise1);
+
+        Exercise result = exerciseService.createExercise(exercise1);
+
+        assertEquals("Squat", result.getName());
+    }
+
+    @Test
+    void createExerciseThrowsNameWhenBlank() {
+        Exercise exercise1 = new Exercise(" ", "Legs", "Barbell");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            exerciseService.createExercise(exercise1);
+        });
     }
 }
