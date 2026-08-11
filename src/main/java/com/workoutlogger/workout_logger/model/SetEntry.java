@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
+/**
+ * Represents an individual set performed for an exercise in a workout
+ * This gives each exercise a specific number of sets, reps, and weight.
+ */
 @Entity
 @Table(name = "set_entries")
 public class SetEntry {
@@ -27,9 +31,18 @@ public class SetEntry {
     @Column(precision = 6, scale = 2)
     private BigDecimal weight;
 
-    //No args constructor for JPA
+    /**
+     * No args constructor for JPA
+     */
     public SetEntry () {}
 
+    /**
+     * Constructor will initialize workoutExercise, set number, reps, and weight
+     * @param workoutExercise the workoutExercise
+     * @param setNumber the set number
+     * @param reps the reps
+     * @param weight the weight
+     */
     public SetEntry (WorkoutExercise workoutExercise, Integer setNumber, Integer reps, BigDecimal weight) {
         this.workoutExercise = workoutExercise;
         this.setNumber = setNumber;
@@ -37,47 +50,74 @@ public class SetEntry {
         this.weight = weight;
     }
 
-    // Getter for id
+    /**
+     * Returns the id for setEntry
+     * @return returns the id for setEntry
+     */
     public Long getId() {
         return id;
     }
 
-    // Getter for workoutExercise
+    /**
+     * Returns the workoutExercise for setEntry
+     * @return returns the workoutExercise for the setEntry
+     */
     public WorkoutExercise getWorkoutExercise() {
         return workoutExercise;
     }
 
-    // Setter for workoutExercise
+    /**
+     * Sets the workoutExercise
+     * @param workoutExercise the workoutExercise being set
+     */
     public void setWorkoutExercise(WorkoutExercise workoutExercise) {
         this.workoutExercise = workoutExercise;
     }
 
-    // Getter for setNumber
+    /**
+     * Returns the set number for setEntry
+     * @return returns the set number
+     */
     public Integer getSetNumber() {
         return setNumber;
     }
 
-    // Setter for setNumber
+    /**
+     * Sets the set number for setEntry
+     * @param setNumber the set number that will be set
+     */
     public void setSetNumber(Integer setNumber) {
         this.setNumber = setNumber;
     }
 
-    // Getter for reps
+    /**
+     * Returns the reps for setEntry
+     * @return returns the reps for setEntry
+     */
     public Integer getReps() {
         return reps;
     }
 
-    // Setter for reps
+    /**
+     * Sets the number of reps
+     * @param reps the reps that will be set
+     */
     public void setReps(Integer reps) {
         this.reps = reps;
     }
 
-    // Getter for weight
+    /**
+     * Returns the weight for setEntry
+     * @return return the weight
+     */
     public BigDecimal getWeight() {
         return weight;
     }
 
-    // Setter for weight
+    /**
+     * Sets the weight for setEntry
+     * @param weight weight that will be set
+     */
     public void setWeight(BigDecimal weight) {
         this.weight = weight;
     }
