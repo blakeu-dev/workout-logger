@@ -47,10 +47,13 @@ public class WorkoutExerciseService {
     }
 
 
-    public void removeExerciseFromWorkout(Long id) {
-        WorkoutExercise existing = workoutExerciseRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("WorkoutExercise not found with id: " + id));
-        workoutExerciseRepository.delete(existing);
+    public void removeExerciseFromWorkout(Long workoutId, Long workoutExerciseId) {
+        WorkoutExercise existing = workoutExerciseRepository.findById(workoutExerciseId)
+                .orElseThrow(() -> new ResourceNotFoundException("WorkoutExercise not found with id: " + workoutExerciseId));
 
+        if (!existing.getWorkout().getId().equals(workoutId)) {
+            throw new IllegalArgumentException("WorkoutExercise " + workoutExerciseId + " does not belong to workout" + workoutId);
+        }
+        workoutExerciseRepository.delete(existing);
     }
 }

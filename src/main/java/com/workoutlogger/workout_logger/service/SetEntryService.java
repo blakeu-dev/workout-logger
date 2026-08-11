@@ -49,9 +49,13 @@ public class SetEntryService {
 
     }
 
-    public void removeSet(Long id) {
-        SetEntry existing = setEntryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("WorkoutExercise not found with id: " + id));
+    public void removeSet(Long workoutExerciseId, Long setEntryId) {
+        SetEntry existing = setEntryRepository.findById(setEntryId)
+                .orElseThrow(() -> new ResourceNotFoundException("WorkoutExercise not found with id: " + setEntryId));
+
+        if (!existing.getWorkoutExercise().getId().equals(workoutExerciseId)) {
+            throw new IllegalArgumentException("SetEntry " + setEntryId + " does not belong to WorkoutExercise " + workoutExerciseId);
+        }
         setEntryRepository.delete(existing);
     }
 
