@@ -5,6 +5,11 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents the association between a workout and an exercise
+ * A WorkoutExercise identifies which exercise belongs to a workout, its position within the workout,
+ * and the sets performed for that exercise
+ */
 @Entity
 @Table(name = "workout_exercise")
 public class WorkoutExercise {
@@ -27,56 +32,92 @@ public class WorkoutExercise {
     @OneToMany(mappedBy = "workoutExercise", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SetEntry> setEntries = new ArrayList<>();
 
-    //No args constructor for JPA
+    /**
+     * No args constructor for JPA
+     */
     public WorkoutExercise() {}
 
+    /**
+     * Creates a WorkoutExercise with a workout, exercise, order of index
+     * @param workout the workout to be joined
+     * @param exercise the exercise to be joined
+     * @param orderIndex position of the exercise within the workout
+     */
     public WorkoutExercise(Workout workout, Exercise exercise, Integer orderIndex) {
         this.workout = workout;
         this.exercise = exercise;
         this.orderIndex = orderIndex;
     }
 
-    // Getter for id
+    /**
+     * Returns the identifier for the WorkoutExercise
+     * @return the id for WorkoutExercise
+     */
     public Long getId() {
         return id;
     }
 
-    // Getter for workout
+    /**
+     * Returns the workout associated with the WorkoutExercise
+     * @return the workout associated with the WorkoutExercise
+     */
     public Workout getWorkout() {
         return workout;
     }
 
-    // Setter for workout
+    /**
+     * Sets the workout associated with the WorkoutExercise
+     * @param workout the workout that will be set
+     */
     public void setWorkout(Workout workout) {
         this.workout = workout;
     }
 
-    // Getter for exercise
+    /**
+     * Returns the exercise associated with this workout entry
+     * @return the exercise
+     */
     public Exercise getExercise() {
         return exercise;
     }
 
-    // Setter for exercise
+    /**
+     * Sets the exercise associated with the WorkoutExercise
+     * @param exercise what is being set
+     */
     public void setExercise(Exercise exercise) {
         this.exercise = exercise;
     }
 
-    // Getter for orderIndex
+    /**
+     * Returns the orderIndex associated with the exercise within the workout
+     * @return the exercise's position in the workout
+     */
     public Integer getOrderIndex() {
         return orderIndex;
     }
 
-    // Setter for orderIndex
+    /**
+     * Sets the position of the exercise within the workout
+     * @param orderIndex the exercise's position in the workout
+     */
     public void setOrderIndex(Integer orderIndex) {
         this.orderIndex = orderIndex;
     }
 
-    // Getter for setEntries
+    /**
+     * Returns the set entries associated with this workout exercise
+     * @return the list of set entries
+     */
     public List<SetEntry> getSetEntries() {
         return setEntries;
     }
 
-    // Helper to add a set entry and keep both sides of the relationship in sync
+    /**
+     * Helper method that will add the set entry to this workout exercise
+     * Establishes the relationship from set entry back to WorkoutExercise
+     * @param setEntry the set entry that will be added
+     */
     public void addSetEntry(SetEntry setEntry) {
         setEntries.add(setEntry);
         setEntry.setWorkoutExercise(this);
