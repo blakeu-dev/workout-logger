@@ -26,6 +26,9 @@ public class SetEntryService {
     }
 
     public List<SetEntry> getSetsForWorkoutExercise(Long workoutExerciseId) {
+        if (!workoutExerciseRepository.existsById(workoutExerciseId)) {
+            throw new IllegalArgumentException("WorkoutExercise not found with id: " + workoutExerciseId);
+        }
         return setEntryRepository.findByWorkoutExerciseIdOrderBySetNumber(workoutExerciseId);
     }
 
