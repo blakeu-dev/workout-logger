@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: workout-postgres
+    environment:
+      POSTGRES_DB: workout_db
+      POSTGRES_USER: workoutapp
+      POSTGRES_PASSWORD: WorkOut1!
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: workout-logger
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/workout_db
+      SPRING_DATASOURCE_USERNAME: workoutapp
+      SPRING_DATASOURCE_PASSWORD: WorkOut1!
+
+volumes:
+  postgres_data:
